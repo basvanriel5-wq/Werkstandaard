@@ -1,0 +1,54 @@
+WERKSTANDAARD — INSTALLATIE OP EEN IPHONE (GRATIS)
+=================================================
+
+Deze map bevat een persoonlijke web-app voor onderhoudstaken, foto's, checklists en werkinstructies.
+De app gebruikt geen betaalde diensten of abonnementen.
+
+WAT ZIT ER IN?
+- index.html: startscherm van de app
+- app.js: functies en lokale gegevensopslag
+- style.css: vormgeving
+- manifest.webmanifest: iPhone-web-app instellingen
+- sw.js: offline beschikbaarheid
+- icon-180.png, icon-192.png, icon-512.png: app-iconen
+
+STAP 1 — GRATIS ONLINE ZETTEN VIA GITHUB PAGES
+1. Ga naar https://github.com en maak eventueel een gratis account aan.
+2. Maak een nieuw repository aan met de naam 'werkstandaard'.
+3. Kies 'Public'. Plaats GEEN vertrouwelijke bedrijfsgegevens in de repository.
+4. Kies 'Add file' > 'Upload files'. Upload ALLE acht app-bestanden uit deze map,
+   rechtstreeks in de hoofdmap van het repository (dus niet de zip zelf).
+5. Klik op 'Commit changes'.
+6. Ga naar 'Settings' > 'Pages'. Kies onder 'Build and deployment':
+   'Deploy from a branch' > branch 'main' > folder '/ (root)' > 'Save'.
+7. Je app verschijnt dan op https://JOUW-GEBRUIKERSNAAM.github.io/werkstandaard/
+   Als de pagina nog niet klaar is, open hem later nogmaals.
+
+STAP 2 — OP DE IPHONE INSTALLEREN
+1. Open de link van je app in Safari op je iPhone.
+2. Tik op het deelmenu van Safari (eventueel eerst het paginamenu).
+3. Kies 'Zet op beginscherm' / 'Add to Home Screen'.
+4. Zorg dat 'Open als web-app' / 'Open as Web App' aanstaat. Tik op 'Voeg toe'.
+5. Open WerkStandaard vanaf het nieuwe icoon op je beginscherm.
+
+STAP 3 — GEBRUIKEN
+1. Open de DEMO-taak en bekijk hoe een standaard eruitziet.
+2. Tik op 'Nieuwe taak'. Vul naam, machine, instructiestappen en checklist in.
+3. Open de taak en kies 'Foto' om een foto te maken of te selecteren.
+4. Koppel de foto aan een instructiestap en voeg eventueel een bijschrift toe.
+5. Vink checklistpunten af; 'Checklist opnieuw beginnen' zet ze terug.
+6. Maak regelmatig bij 'Back-up' een reservekopie; sla die op bij 'Bestanden'.
+
+LET OP
+- De app en app-code worden via GitHub Pages publiek bereikbaar, maar eigen taken,
+  foto's en notities blijven op de iPhone opgeslagen (geen cloudsync).
+- Deel je persoonlijke app-link of een back-upbestand niet als deze gegevens
+  bedrijfsvertrouwelijk zijn. Een ander met dezelfde URL ziet niet jouw lokale data.
+- Bij verwijderen van de web-app, het wissen van websitegegevens of een defect toestel
+  kunnen lokaal opgeslagen gegevens verloren gaan. Exporteer regelmatig een back-up.
+- Data in Safari en in de beginscherm-web-app kunnen gescheiden zijn. Voer je echte
+  gegevens bij voorkeur pas in nadat je de app op het beginscherm hebt gezet.
+- Open de app minstens één keer online zodat de offline bestanden gecachet worden.
+- Dit is geen goedgekeurd onderhouds- of veiligheidssysteem. Volg altijd het beleid,
+  de werkvergunningen en de gecontroleerde procedures van jouw werkgever.
+- De DEMO-taak is alleen illustratief en geen onderhoudsinstructie.

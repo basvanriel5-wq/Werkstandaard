@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d766b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="WerkStandaard">
+  <meta name="description" content="Je persoonlijke onderhoudsbibliotheek met foto's, checklists en standaardwerkinstructies.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icon-180.png">
+  <link rel="icon" type="image/png" href="./icon-192.png">
+  <link rel="stylesheet" href="./style.css">
+  <title>WerkStandaard — Onderhoudsbibliotheek</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brandmark" aria-hidden="true">🔧</div>
+    <div class="brandcopy"><strong>WerkStandaard</strong><small>Mijn onderhoudsbibliotheek</small></div>
+    <button class="icon-button" type="button" id="headerBackup" title="Back-up" aria-label="Back-up">⇩</button>
+  </header>
+
+  <main class="main" id="mainContent">
+    <section id="homeView" class="page">
+      <div class="hero">
+        <div class="eyebrow">OVERZICHT</div>
+        <h1>Goed werk begint met<br><span>een duidelijke standaard.</span></h1>
+        <p>Al je onderhoudstaken, foto's en werkinstructies overzichtelijk op één plek.</p>
+        <button type="button" class="button button-light" id="heroNew">＋ Nieuwe onderhoudstaak</button>
+        <div class="hero-ornament" aria-hidden="true">✓</div>
+      </div>
+      <div class="stats" aria-label="Overzicht">
+        <div class="stat"><strong id="statTasks">0</strong><span>Taken</span></div>
+        <div class="stat"><strong id="statPhotos">0</strong><span>Foto's</span></div>
+        <div class="stat"><strong id="statChecks">0</strong><span>Checkpunten</span></div>
+      </div>
+      <div class="section-header"><div><div class="eyebrow green">BIBLIOTHEEK</div><h2>Onderhoudstaken</h2></div><button class="button button-small" id="topNew" type="button">＋ Toevoegen</button></div>
+      <label class="search-wrap"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Zoek taak, machine of onderdeel…" autocomplete="off"><span class="sr-only">Zoeken in taken</span></label>
+      <select id="categoryFilter" class="select-filter" aria-label="Filter op soort taak"><option value="">Alle soorten onderhoud</option><option>Preventief onderhoud</option><option>Inspectie</option><option>Reiniging</option><option>Storingswerk</option><option>Overig</option></select>
+      <div class="task-list" id="taskList"></div>
+    </section>
+
+    <section id="detailView" class="page hidden" aria-label="Taakdetails">
+      <div class="detail-top"><button id="backToHome" class="back-button" type="button">← Overzicht</button><div class="detail-top-actions"><button class="button button-quiet button-small" type="button" id="editTask">✎ Bewerken</button></div></div>
+      <div id="detailBody"></div>
+    </section>
+
+    <section id="backupView" class="page hidden">
+      <div class="eyebrow green">BEHEER</div><h1 class="page-title">Back-up & gegevens</h1>
+      <p class="lead">Je onderhoudsinformatie staat alleen op dit apparaat. Bewaar regelmatig een reservekopie, zeker als je veel foto's toevoegt.</p>
+      <div class="panel"><div class="panel-icon">⇩</div><h2>Back-up maken</h2><p>Download al je onderhoudstaken, checklists, werkinstructies en foto's als één JSON-bestand.</p><button type="button" id="exportButton" class="button button-primary button-full">Download mijn back-up</button></div>
+      <div class="panel"><div class="panel-icon">⇧</div><h2>Back-up terugzetten</h2><p>Kies een eerder gedownload back-upbestand. Bestaande taken blijven bewaard; taken met hetzelfde ID worden vervangen.</p><label class="button button-outline button-full upload-label">Kies back-upbestand<input type="file" id="importInput" accept=".json,application/json" hidden></label></div>
+      <div class="note"><strong>🔒 Privacy</strong><p>Je ingevoerde gegevens en foto's worden niet naar een server verstuurd. Er is geen account of synchronisatie. Iedereen die toegang heeft tot de ontgrendelde app op je iPhone kan de informatie zien.</p></div>
+      <div class="note warning"><strong>⚠️ Veilig werken</strong><p>Dit is een persoonlijk hulpmiddel, geen goedgekeurd veiligheids- of onderhoudsmanagementsysteem. Gebruik uitsluitend instructies die bij jouw werk zijn gecontroleerd en goedgekeurd.</p></div>
+      <div class="small-print" id="backupStats"></div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Hoofdnavigatie">
+    <button type="button" id="navHome" class="nav-item active"><span class="nav-icon">▦</span><span>Overzicht</span></button>
+    <button type="button" id="navNew" class="nav-item nav-center"><span class="nav-plus">＋</span><span>Nieuwe taak</span></button>
+    <button type="button" id="navBackup" class="nav-item"><span class="nav-icon">⇩</span><span>Back-up</span></button>
+  </nav>
+
+  <dialog id="editorDialog" class="editor-dialog">
+    <form id="taskForm" class="editor-form">
+      <div class="dialog-head"><div><div class="eyebrow green">WERKSTANDAARD</div><h2 id="editorTitle">Nieuwe taak</h2></div><button type="button" id="closeEditor" class="icon-button close-button" aria-label="Sluiten">✕</button></div>
+      <div class="dialog-body">
+        <label class="field"><span>Titel van de taak <em>*</em></span><input id="formTitle" name="title" required maxlength="120" placeholder="Bijv. Maandelijkse pompcontrole"></label>
+        <label class="field"><span>Machine / locatie</span><input id="formMachine" name="machine" maxlength="120" placeholder="Bijv. Pomp P-01 · Technische ruimte"></label>
+        <div class="field-row"><label class="field"><span>Soort taak</span><select id="formCategory"><option>Preventief onderhoud</option><option>Inspectie</option><option>Reiniging</option><option>Storingswerk</option><option>Overig</option></select></label><label class="field"><span>Frequentie</span><input id="formFrequency" maxlength="60" placeholder="Bijv. elke week"></label></div>
+        <label class="field"><span>Benodigd gereedschap / materiaal</span><textarea id="formTools" rows="2" placeholder="Wat heb je nodig voor deze taak?"></textarea></label>
+        <label class="field"><span>Veiligheid & voorwaarden</span><textarea id="formSafety" rows="3" placeholder="Verwijs naar geldende veiligheidsregels en werkvergunningen."></textarea></label>
+        <div class="form-section"><div class="section-subhead"><div><h3>Standaardwerkinstructie</h3><p>Beschrijf elke stap in de juiste volgorde.</p></div></div><div id="stepsEditor" class="edit-rows"></div><button type="button" class="button button-outline button-add" id="addStep">＋ Instructiestap toevoegen</button></div>
+        <div class="form-section"><div class="section-subhead"><div><h3>Checklist</h3><p>Welke punten wil je kunnen afvinken?</p></div></div><div id="checksEditor" class="edit-rows"></div><button type="button" class="button button-outline button-add" id="addCheck">＋ Controlepunt toevoegen</button></div>
+        <div class="note note-compact">📷 Foto's voeg je direct na het opslaan toe aan je taak. Je kunt foto's aan een instructiestap koppelen.</div>
+      </div>
+      <div class="dialog-actions"><button type="button" class="button button-outline" id="cancelEditor">Annuleren</button><button class="button button-primary" type="submit" id="saveTaskButton">Taak opslaan</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="photoDialog" class="photo-dialog">
+    <form id="photoForm">
+      <div class="dialog-head"><div><div class="eyebrow green">FOTO TOEVOEGEN</div><h2>Nieuwe foto</h2></div><button type="button" id="closePhoto" class="icon-button close-button" aria-label="Sluiten">✕</button></div>
+      <div class="dialog-body">
+        <label class="field"><span>Maak een foto of kies uit Foto's <em>*</em></span><input id="photoFiles" type="file" accept="image/*" multiple required></label>
+        <label class="field"><span>Bijschrift (optioneel)</span><input type="text" maxlength="160" id="photoCaption" placeholder="Bijv. positie van het filter"></label>
+        <label class="field"><span>Koppel aan een instructiestap (optioneel)</span><select id="photoStep"><option value="">Algemene foto</option></select></label>
+        <p class="small-print">Foto's worden verkleind zodat ze minder opslagruimte innemen. Meerdere foto's tegelijk toevoegen kan.</p>
+      </div>
+      <div class="dialog-actions"><button type="button" id="cancelPhoto" class="button button-outline">Annuleren</button><button type="submit" class="button button-primary" id="savePhotoButton">Foto toevoegen</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js" defer></script>
+</body>
+</html>
